@@ -35,6 +35,6 @@ runs:
       shell: bash
     - uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ inputs.GITHUB_TOKEN }}
         publish_dir: ./docs
         force_orphan: true
