@@ -14,24 +14,23 @@ runs:
     - uses: maxim-lobanov/setup-xcode@v1.2.3
       with:
         xcode-version: latest
-    - name: Check Xcode version
-      run: xcodebuild -version
-    - name: Check Swift version
-      run: swift --version
-    - name: Generate Docs
-      run: |
-          cd ${{ github.action_path }}
-          xcodebuild docbuild -scheme ${{ inputs.scheme }} -destination ${{ inputs.destination }} -derivedDataPath ./.xcodebuild
-          cp -r $(find ./.xcodebuild -type d -name '${{ inputs.scheme }}.doccarchive') ./${{ inputs.scheme }}.doccarchive
-          echo "The DocC archive can be found at ./${{ inputs.scheme }}.doccarchive"
-    - name: Create Static HTML pages
-      run: |
-          git clone https://github.com/DoccZz/docc2html.git
-          cd docc2html
-          git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
-          swift run docc2html ../${{ inputs.scheme }}.doccarchive ../docs
-    - name: Deploy to GH Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - run: xcodebuild -version
+      shell: bash
+    - run: swift --version
+      shell: bash
+    - run: |
+        cd ${{ github.action_path }}
+        xcodebuild docbuild -scheme ${{ inputs.scheme }} -destination ${{ inputs.destination }} -derivedDataPath ./.xcodebuild
+        cp -r $(find ./.xcodebuild -type d -name '${{ inputs.scheme }}.doccarchive') ./${{ inputs.scheme }}.doccarchive
+        echo "The DocC archive can be found at ./${{ inputs.scheme }}.doccarchive"
+      shell: bash
+    - run: |
+        git clone https://github.com/DoccZz/docc2html.git
+        cd docc2html
+        git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+        swift run docc2html ../${{ inputs.scheme }}.doccarchive ../docs
+      shell: bash
+    - uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs
