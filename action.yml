@@ -22,7 +22,6 @@ runs:
     - run: swift --version
       shell: bash
     - run: |
-        cd ${{ github.action_path }}
         xcodebuild docbuild -scheme ${{ inputs.scheme }} -destination ${{ inputs.destination }} -derivedDataPath ./.xcodebuild
         cp -r $(find ./.xcodebuild -type d -name '${{ inputs.scheme }}.doccarchive') ./${{ inputs.scheme }}.doccarchive
         echo "The DocC archive can be found at ./${{ inputs.scheme }}.doccarchive"
