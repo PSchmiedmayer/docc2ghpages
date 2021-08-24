@@ -4,6 +4,10 @@ inputs:
   scheme:
     description: 'The name of the scheme that the documentation should be generated for passed to xcodebuild'
     required: true
+  GITHUB_TOKEN:
+    description: 'The GITHUB_TOKEN used to push to the gh-pages branch'
+    required: true
+    default: ${{ secrets.GITHUB_TOKEN }}
   destination:
     description: 'The destination the schme can be build for passed to xcodebuild.'
     required: true
