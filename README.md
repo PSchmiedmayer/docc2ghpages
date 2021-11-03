@@ -2,7 +2,7 @@
 
 Generates a DocC documentation, creates static HTML pages using docc2html, and deploys it to the gh-pagges branch
 
-# Usage
+## Usage
 
 <!-- start usage -->
 ```yaml
@@ -22,3 +22,7 @@ Generates a DocC documentation, creates static HTML pages using docc2html, and d
     destination: ''
 ```
 <!-- end usage -->
+
+## License
+
+The scripts and documentation in this project are released under the [MIT License](LICENSE)
