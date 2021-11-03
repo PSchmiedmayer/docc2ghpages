@@ -1,16 +1,17 @@
-name: 'docc2html GH-Pages'
-description: 'Generates a DocC doocumentation, creates static HTML pages using docc2html, and deploys it to the gh-pagges branch'
+name: 'docc2ghpages'
+description: 'Generates a DocC documentation, creates static HTML pages using docc2html, and deploys it to the gh-pagges branch'
 inputs:
   scheme:
     description: 'The name of the scheme that the documentation should be generated for passed to xcodebuild'
     required: true
-  GITHUB_TOKEN:
-    description: 'The GITHUB_TOKEN used to push to the gh-pages branch'
+  token:
+    description: 'The personal access token (PAT) used to push to the gh-pages branch.'
     required: true
+    default: ${{ github.token }}
   destination:
     description: 'The destination the schme can be build for passed to xcodebuild.'
     required: true
-    default: 'platform=macOS,arch=x86_64'
+    default: 'platform=macOS'
 runs:
   using: "composite"
   steps:
@@ -34,6 +35,6 @@ runs:
       shell: bash
     - uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ inputs.GITHUB_TOKEN }}
+        github_token: ${{ inputs.token }}
         publish_dir: ./docs
         force_orphan: true
